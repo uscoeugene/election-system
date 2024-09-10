@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const logger = require('../config/logger');
+
 const { body, validationResult } = require('express-validator');
 
 // Login route
@@ -48,5 +50,42 @@ router.post('/login',
     }
   }
 );
+
+router.post('/signup', async (req, res) => {
+  const { username, fullname, password, email, phone } = req.body;
+
+  try {
+    // Check if the username or email already exists
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+
+    if (existingUser) {
+      if (existingUser.username === username) {
+        return res.status(400).json({ message: 'Username already exists' });
+      }
+      if (existingUser.email === email) {
+        return res.status(400).json({ message: 'Email already exists' });
+      }
+    }
+
+    // Create a new user if no duplicates are found
+    const newUser = new User({ username, fullname, password, email, phone });
+    await newUser.save();
+    
+    
+
+    res.status(201).json(newUser);
+  } catch (err) {
+    // Handle other errors (e.g., validation errors)
+    if (err.code === 11000) {
+      // Duplicate key error
+      const key = Object.keys(err.keyValue)[0]; // e.g., "username" or "email"
+      const value = err.keyValue[key];
+      return res.status(400).json({ message: `${key.charAt(0).toUpperCase() + key.slice(1)} '${value}' already exists` });
+    }
+    logger.info("An error error has occured:  " + err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
 
 module.exports = router;

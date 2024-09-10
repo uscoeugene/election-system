@@ -21,7 +21,27 @@ router.get('/', async (req, res) => {
     }
   });
   
-  module.exports = router;
+
+  //Get user profile
+  router.get('/profile', authMiddleware, async (req, res) => {
+    try {
+      console.log("user profile route");
+      console.log(req);
+      const user = await User.findById(req.user.id).select('-password'); // Fetch all users from the database
+      logger.info("User route accessed"); // Log access to the route
+  
+      if (!user) {
+        return res.status(404).json({ message: "User not found" }); // Return 404 if no users are found
+      }
+  
+      res.json(user); // Return the users in JSON format
+    } catch (err) {
+      console.log(err);
+      logger.error("Error fetching user profile: " + err.message); // Log the error
+      res.status(500).json({ message: err.message }); // Return 500 for server errors
+    }
+  });
+  
 
 // Create a new user
 router.post('/', async (req, res) => {

@@ -7,8 +7,8 @@ const rateLimiterMiddleware = require('./middleware/rateLimiter');
 const authRoutes = require('./routes/authRoutes'); // Import the auth routes
 const voteRoutes = require('./routes/voteRoutes'); // Import vote routes
 const userRoutes = require('./routes/userRoutes');
-// const organizationRoutes = require('./routes/organizationRoutes');
-// const electionRoutes = require('./routes/electionRoutes');
+const organizationRoutes = require('./routes/organizationRoutes');
+const electionRoutes = require('./routes/electionRoutes');
 // const positionRoutes = require('./routes/positionRoutes');
 // const candidateRoutes = require('./routes/candidateRoutes');
 
@@ -29,8 +29,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/vote', voteRoutes); // Register the vote routes
 app.use('/api/verification', verificationRoutes); // Register the verification routes
-// app.use('/api/organizations', organizationRoutes);
-// app.use('/api/elections', electionRoutes);
+app.use('/api/organizations', organizationRoutes);
+app.use('/api/elections', electionRoutes);
 // app.use('/api/positions', positionRoutes);
 // app.use('/api/candidates', candidateRoutes);
 
