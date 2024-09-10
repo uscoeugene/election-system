@@ -20,6 +20,9 @@ console.log(user);
         </Typography>
         <Button color="inherit" component={Link} to="/">Home</Button>
         <Button color="inherit" component={Link} to="/user/dashboard">Dashboard</Button>
+        <Button color="inherit" component={Link} to="/user/organizations">My Organizations</Button>
+        <Button color="inherit" component={Link} to="/user/elections">Elections</Button>
+        <Button color="inherit" component={Link} to="/user/profile">Profile</Button>
         {user && <Button color="inherit" onClick={handleLogout}>Logout</Button>}
       </Toolbar>
     </AppBar>

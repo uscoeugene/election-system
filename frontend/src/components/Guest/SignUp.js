@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GuestHeader from './GuestHeader';
 import {signup} from '../../redux/actions/authActions';
+import { useNavigate } from 'react-router-dom';
 import { Container, Typography, TextField, Button, Box, Alert } from '@mui/material';
 
 const SignUpPage = () => {
@@ -13,10 +14,14 @@ const SignUpPage = () => {
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
 
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     // Dispatch a signup action here
-    dispatch(signup({ username, fullname, email, password, phone }));
+    dispatch(signup({ username, fullname, email, password, phone }))
+    .then(() =>{
+        navigate('/signin');
+    });
   };
 
   return (

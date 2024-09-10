@@ -31,6 +31,7 @@ const SignInPage = () => {
           <Typography variant="h4" component="h1" gutterBottom>
             Sign In
           </Typography>
+          {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
           <form onSubmit={handleSubmit}>
             <TextField
               label="Username"
@@ -60,7 +61,7 @@ const SignInPage = () => {
             >
               {loading ? 'Signing In...' : 'Sign In'}
             </Button>
-            {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+            
           </form>
         </Box>
       </Container>

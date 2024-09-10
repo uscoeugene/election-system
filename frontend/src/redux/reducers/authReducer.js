@@ -18,16 +18,16 @@ import {
     switch (action.type) {
       case USER_LOGIN_REQUEST:
       case USER_SIGNUP_REQUEST:
-        return { ...state, loading: true };
+        return { ...state, loading: true, error:null };
       case USER_LOGIN_SUCCESS:
-        return { ...state, loading: false, user: action.payload };
+        return { ...state, loading: false, user: action.payload, error:null};
       case USER_SIGNUP_SUCCESS:
-        return { ...state, loading: false, user: action.payload };
+        return { ...state, loading: false, user: action.payload, error:null };
       case USER_LOGIN_FAIL:
       case USER_SIGNUP_FAIL:
-        return { ...state, loading: false, error: action.payload };
+        return { ...state, loading: false, user:null, error: action.payload };
       case USER_LOGOUT:
-        return { ...state, user: null };
+        return { ...state, user: null, error:null };
       default:
         return state;
     }
